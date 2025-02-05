@@ -23,32 +23,33 @@ const logger = createLogger({
         logFormat // Use the custom log format with metadata
     ),
     transports: [
-        new DailyRotateFile({
-            filename: `logs/combined_%DATE%.log`, // Pattern for combined logs
-            datePattern: datePattern,
-            level: 'info', // Log level
-            maxFiles: '30d', // Retain logs for 30 days
-            auditFile: 'logs/audit/combined-audit.json'
-        }),
-        new DailyRotateFile({
-            filename: `logs/error_%DATE%.log`, // Pattern for error logs
-            datePattern: datePattern,
-            level: 'error', // Only errors
-            maxFiles: '30d',
-            auditFile: 'logs/audit/error-audit.json'
-        }),
+        new transports.Console("logging")
+        // new DailyRotateFile({
+        //     filename: `logs/combined_%DATE%.log`, // Pattern for combined logs
+        //     datePattern: datePattern,
+        //     level: 'info', // Log level
+        //     maxFiles: '30d', // Retain logs for 30 days
+        //     auditFile: 'logs/audit/combined-audit.json'
+        // }),
+        // new DailyRotateFile({
+        //     filename: `logs/error_%DATE%.log`, // Pattern for error logs
+        //     datePattern: datePattern,
+        //     level: 'error', // Only errors
+        //     maxFiles: '30d',
+        //     auditFile: 'logs/audit/error-audit.json'
+        // }),
     ],
 });
 
 // Handle unhandled exceptions with daily rotation
-logger.exceptions.handle(
-    new DailyRotateFile({
-        filename: `logs/exceptions_%DATE%.log`, // Pattern for exception logs
-        datePattern: datePattern,
-        maxFiles: '30d',
-        auditFile: 'logs/audit/exceptions-audit.json'
-    })
-);
+// logger.exceptions.handle(
+//     new DailyRotateFile({
+//         filename: `logs/exceptions_%DATE%.log`, // Pattern for exception logs
+//         datePattern: datePattern,
+//         maxFiles: '30d',
+//         auditFile: 'logs/audit/exceptions-audit.json'
+//     })
+// );
 
 module.exports = logger;
 
